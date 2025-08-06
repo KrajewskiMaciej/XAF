@@ -3,11 +3,12 @@
 ## Visual Studio local settings
 .vs/
 
-## Build results
+## Build results and artifacts
 [Bb]in/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+artifacts/
 
 ## User-specific files
 *.user
@@ -15,7 +16,7 @@
 *.userosscache
 *.sln.docstates
 
-## Rider / VS Code
+## Rider / VS Code specific
 .idea/
 .vscode/
 *.code-workspace
@@ -23,11 +24,16 @@
 ## Logs
 *.log
 [Ll]ogs/
+*.log.json
+*.etl
+# Popularna biblioteka do logowania - Serilog
+*_log.txt
 
-## Runtime files
-*.pidb
+## Runtime files and debug symbols in output folders
+## POPRAWKA: Ignoruj pliki PDB tylko w katalogach wyjściowych, aby uniknąć ignorowania ich dla zależności.
+[Bb]in/**/*.pdb
+[Oo]bj/**/*.pdb
 *.mdb
-*.pdb
 
 ## ASP.NET/Blazor-specific
 wwwroot/**/*.map
@@ -37,28 +43,38 @@ dist/
 out/
 .publish/
 
-## .NET Core
+## .NET Core legacy files (dla starszych projektów)
 project.lock.json
 project.fragment.lock.json
-artifacts/
 
 # Package managers
 packages/
-*.nupkg
-*.snupkg
-*.nuspec
+## POPRAWKA: Ignoruj pakiety NuGet i pliki nuspec tylko w katalogach wyjściowych.
+## Ręcznie tworzone pliki .nuspec powinny być w repozytorium.
+[Bb]in/**/*.nupkg
+[Oo]bj/**/*.nupkg
+[Bb]in/**/*.snupkg
+[Oo]bj/**/*.snupkg
+[Bb]in/**/*.nuspec
+[Oo]bj/**/*.nuspec
 
-# Firebird database files (if used in repo/test)
+# Local database files
 *.fdb
 *.gdb
 *.ib
+# DODANO: Popularne pliki lokalnych baz danych
+*.db
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
 
+# XAF (DevExpress eXpressApp Framework) specific - BEZ ZMIAN
 **/Model.User.xafml
 **/Model*.xafml.cs
 **/ModelDiffsDesigner.cs
 **/XAFMLCache/
 **/*.xafml.cache
-
 **/UnusableNodes*.xml
 
 # Tests & temp
@@ -67,10 +83,11 @@ TestResults/
 *.vssscc
 *.coverage
 *.testsettings
-*.runsettings
+# UWAGA: Plik *.runsettings często powinien być w repozytorium, aby współdzielić konfigurację testów.
+# Ignoruj tylko jego lokalną wersję, np. `local.runsettings` lub `*.runsettings.user` (pokryte przez *.user).
 *.dbmdl
 
-# Others
+# ReSharper / other tools
 _ReSharper*/
 *.resharper
 *.DotSettings.user
@@ -79,7 +96,17 @@ _ReSharper*/
 *.Publish.xml
 *.deploy*
 
-# Secrets/configs (optional)
+# Secrets & local configs (optional but recommended)
 appsettings.Development.json
 appsettings.Local.json
 secrets.json
+# DODANO: Pliki z sekretami w projektach C++
+**/secrets.h
+
+# DODANO: Ogólne pliki do zignorowania
+# Pliki tymczasowe (np. tworzone przez Office)
+~*
+# Pliki systemowe macOS
+.DS_Store
+# Pliki systemowe Windows
+Thumbs.db
