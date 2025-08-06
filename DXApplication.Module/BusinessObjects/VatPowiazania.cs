@@ -7,6 +7,24 @@ using DevExpress.ExpressApp.Model;
 
 namespace DXApplication.Module.BusinessObjects
 {
+    // KROK 1: Zdefiniuj strukturę dla klucza złożonego
+    // Ta struktura nie jest mapowana do tabeli, jest tylko kontenerem na pola klucza.
+    public struct VatPowiazaniaKey
+    {
+        [Persistent("VAT_OPISY_ID")]
+        [Association("VatOpisy-VatPowiazania")]
+        public VatOpisy VatOpisy { get; set; }
+
+        [Persistent("VAT_SPOSOBY_ID")]
+        [Association("VatSposoby-VatPowiazania")]
+        public VatSposoby VatSposoby { get; set; }
+
+        [Persistent("KRAJE_ID")]
+        [Association("Kraje-VatPowiazania")]
+        public Kraje Kraje { get; set; }
+    }
+
+
     [DefaultClassOptions]
     [Persistent("VAT_POWIAZANIA")]
     [OptimisticLocking(false)]
@@ -15,18 +33,23 @@ namespace DXApplication.Module.BusinessObjects
     {
         public VatPowiazania(Session session) : base(session) { }
 
-        // --- RELACJE (KLUCZE OBCE Z TABELI) ---
-        [Key, Persistent("VAT_OPISY_ID")]
-        [Association("VatOpisy-VatPowiazania")]
-        public VatOpisy VatOpisy { get; set; }
+        // KROK 2: Zadeklaruj klucz złożony jako jedno pole typu struktury
+        // Użyj publicznego pola, a nie właściwości, dla kluczy strukturalnych.
+        [Key, Persistent]
+        public VatPowiazaniaKey CompoundKey;
 
-        [Key, Persistent("VAT_SPOSOBY_ID")]
-        [Association("VatSposoby-VatPowiazania")]
-        public VatSposoby VatSposoby { get; set; }
+        // KROK 3: Usuń stare definicje kluczy i zastąp je właściwościami odwołującymi się do klucza złożonego
+        // Te właściwości są potrzebne, aby reszta kodu (np. właściwości NonPersistent) działała bez zmian.
+        // Używamy PersistentAlias, aby XPO wiedziało, skąd brać dane.
+        [PersistentAlias("CompoundKey.VatOpisy")]
+        public VatOpisy VatOpisy => CompoundKey.VatOpisy;
+        
+        [PersistentAlias("CompoundKey.VatSposoby")]
+        public VatSposoby VatSposoby => CompoundKey.VatSposoby;
 
-        [Key, Persistent("KRAJE_ID")]
-        [Association("Kraje-VatPowiazania")]
-        public Kraje Kraje { get; set; }
+        [PersistentAlias("CompoundKey.Kraje")]
+        public Kraje Kraje => CompoundKey.Kraje;
+
 
         private VatWartosci _vatWartosci;
         [Association("VatWartosci-VatPowiazania")]
@@ -90,6 +113,7 @@ namespace DXApplication.Module.BusinessObjects
         }
 
         // --- WŁAŚCIWOŚCI NIETRWAŁE (NON-PERSISTENT) DO WYŚWIETLANIA W UI ---
+        // Ta część nie wymaga zmian, ponieważ właściwości VatOpisy, VatSposoby i Kraje nadal istnieją.
         [NonPersistent]
         [XafDisplayName("VAT kod")]
         public string VatKod => VatOpisy?.Kod;

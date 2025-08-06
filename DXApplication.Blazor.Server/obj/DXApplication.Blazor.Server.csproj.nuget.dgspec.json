@@ -1,43 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj": {}
+    "D:\\XAFDictionary\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj": {
+    "D:\\XAFDictionary\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj",
+        "projectUniqueName": "D:\\XAFDictionary\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj",
         "projectName": "DXApplication.Blazor.Server",
-        "projectPath": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj",
-        "packagesPath": "C:\\Users\\makro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Blazor.Server\\obj\\",
+        "projectPath": "D:\\XAFDictionary\\DXApplication.Blazor.Server\\DXApplication.Blazor.Server.csproj",
+        "packagesPath": "C:\\Users\\Maciej.krajewski\\.nuget\\packages\\",
+        "outputPath": "D:\\XAFDictionary\\DXApplication.Blazor.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\XAF\\Components\\Offline Packages",
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\makro\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Maciej.krajewski\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "D:\\XAF\\Components\\System\\Components\\Packages": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/O82aSUpmcere5MytrM6SCXsvNvmWppuXGyu4ROKNPZwAzwmSrE/api/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Module\\DXApplication.Module.csproj": {
-                "projectPath": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Module\\DXApplication.Module.csproj"
+              "D:\\XAFDictionary\\DXApplication.Module\\DXApplication.Module.csproj": {
+                "projectPath": "D:\\XAFDictionary\\DXApplication.Module\\DXApplication.Module.csproj"
               }
             }
           }
@@ -93,37 +88,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Module\\DXApplication.Module.csproj": {
+    "D:\\XAFDictionary\\DXApplication.Module\\DXApplication.Module.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Module\\DXApplication.Module.csproj",
+        "projectUniqueName": "D:\\XAFDictionary\\DXApplication.Module\\DXApplication.Module.csproj",
         "projectName": "DXApplication.Module",
-        "projectPath": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Module\\DXApplication.Module.csproj",
-        "packagesPath": "C:\\Users\\makro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\makro\\Downloads\\praktyki25-Waluta-KursWaluty-Tagi\\praktyki25-Waluta-KursWaluty-Tagi\\DXApplication\\DXApplication.Module\\obj\\",
+        "projectPath": "D:\\XAFDictionary\\DXApplication.Module\\DXApplication.Module.csproj",
+        "packagesPath": "C:\\Users\\Maciej.krajewski\\.nuget\\packages\\",
+        "outputPath": "D:\\XAFDictionary\\DXApplication.Module\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\XAF\\Components\\Offline Packages",
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\makro\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Maciej.krajewski\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "D:\\XAF\\Components\\System\\Components\\Packages": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/O82aSUpmcere5MytrM6SCXsvNvmWppuXGyu4ROKNPZwAzwmSrE/api/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -191,7 +181,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

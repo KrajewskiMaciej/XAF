@@ -10,3 +10,16 @@ C:\Users\makro\Downloads\praktyki25-Waluta-KursWaluty-Tagi\praktyki25-Waluta-Kur
 C:\Users\makro\Downloads\praktyki25-Waluta-KursWaluty-Tagi\praktyki25-Waluta-KursWaluty-Tagi\DXApplication\DXApplication.Module\obj\Debug\net8.0\refint\DXApplication.Module.dll
 C:\Users\makro\Downloads\praktyki25-Waluta-KursWaluty-Tagi\praktyki25-Waluta-KursWaluty-Tagi\DXApplication\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.pdb
 C:\Users\makro\Downloads\praktyki25-Waluta-KursWaluty-Tagi\praktyki25-Waluta-KursWaluty-Tagi\DXApplication\DXApplication.Module\obj\Debug\net8.0\ref\DXApplication.Module.dll
+D:\XAFDictionary\DXApplication.Module\bin\Debug\net8.0\DXApplication.Module.deps.json
+D:\XAFDictionary\DXApplication.Module\bin\Debug\net8.0\DXApplication.Module.dll
+D:\XAFDictionary\DXApplication.Module\bin\Debug\net8.0\DXApplication.Module.pdb
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.csproj.AssemblyReference.cache
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.GeneratedMSBuildEditorConfig.editorconfig
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.AssemblyInfoInputs.cache
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.AssemblyInfo.cs
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.csproj.CoreCompileInputs.cache
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.sourcelink.json
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.dll
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\refint\DXApplication.Module.dll
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\DXApplication.Module.pdb
+D:\XAFDictionary\DXApplication.Module\obj\Debug\net8.0\ref\DXApplication.Module.dll

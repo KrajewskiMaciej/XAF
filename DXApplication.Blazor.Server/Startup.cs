@@ -9,8 +9,10 @@ using DXApplication.Blazor.Server.Services;
 
 namespace DXApplication.Blazor.Server;
 
-public class Startup {
-    public Startup(IConfiguration configuration) {
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
         Configuration = configuration;
     }
 
@@ -18,22 +20,32 @@ public class Startup {
 
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-    public void ConfigureServices(IServiceCollection services) {
+    public void ConfigureServices(IServiceCollection services)
+    {
         services.AddSingleton(typeof(Microsoft.AspNetCore.SignalR.HubConnectionHandler<>), typeof(ProxyHubConnectionHandler<>));
 
+        string executablePath = AppDomain.CurrentDomain.BaseDirectory;
+
+        string solutionPath = Directory.GetParent(executablePath)?.Parent?.Parent?.Parent?.Parent?.FullName;
+
+        // Ustaw wartość |DataDirectory| na główny katalog aplikacji, BEZ podkatalogu 'Data'
+        AppDomain.CurrentDomain.SetData("DataDirectory", solutionPath);
         services.AddRazorPages();
         services.AddServerSideBlazor();
         services.AddHttpContextAccessor();
         services.AddScoped<CircuitHandler, CircuitHandlerProxy>();
-        services.AddXaf(Configuration, builder => {
+        services.AddXaf(Configuration, builder =>
+        {
             builder.UseApplication<DXApplicationBlazorApplication>();
             builder.Modules
                 .Add<DXApplication.Module.DXApplicationModule>()
                 .Add<DXApplicationBlazorModule>();
             builder.ObjectSpaceProviders
-                .AddXpo((serviceProvider, options) => {
+                .AddXpo((serviceProvider, options) =>
+                {
                     string connectionString = null;
-                    if(Configuration.GetConnectionString("ConnectionString") != null) {
+                    if (Configuration.GetConnectionString("ConnectionString") != null)
+                    {
                         connectionString = Configuration.GetConnectionString("ConnectionString");
                     }
 #if EASYTEST
@@ -51,11 +63,14 @@ public class Startup {
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-        if(env.IsDevelopment()) {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
             app.UseDeveloperExceptionPage();
         }
-        else {
+        else
+        {
             app.UseExceptionHandler("/Error");
             // The default HSTS value is 30 days. To change this for production scenarios, see: https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
@@ -65,7 +80,8 @@ public class Startup {
         app.UseStaticFiles();
         app.UseRouting();
         app.UseXaf();
-        app.UseEndpoints(endpoints => {
+        app.UseEndpoints(endpoints =>
+        {
             endpoints.MapXafEndpoints();
             endpoints.MapBlazorHub();
             endpoints.MapFallbackToPage("/_Host");
