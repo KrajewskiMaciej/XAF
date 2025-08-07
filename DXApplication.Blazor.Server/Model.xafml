@@ -43,6 +43,29 @@
         <ColumnInfo Id="KontrolujKlucz" Width="70" />
       </Columns>
     </ListView>
+    <ListView Id="VatPowiazania_ListView">
+      <Columns>
+        <ColumnInfo Id="VatOpisy" SortIndex="0" SortOrder="Ascending" Width="102" />
+        <ColumnInfo Id="VatSposoby" Width="107" />
+        <ColumnInfo Id="Kraje" Width="104" />
+        <ColumnInfo Id="VatWartosci" Width="108" />
+        <ColumnInfo Id="InsertedBy" Width="181" />
+        <ColumnInfo Id="InsDate" Width="133" />
+        <ColumnInfo Id="Inserting" Width="106" />
+        <ColumnInfo Id="Editing" Width="127" />
+        <ColumnInfo Id="EdiDate" Width="99" />
+        <ColumnInfo Id="VatKod" Width="80" />
+        <ColumnInfo Id="VatOpis" Width="83" />
+        <ColumnInfo Id="VatSposobKod" Width="132" />
+        <ColumnInfo Id="VatSposobOpis" Width="135" />
+        <ColumnInfo Id="Wartosc" Width="106" />
+        <ColumnInfo Id="KrajKod" Width="79" />
+        <ColumnInfo Id="KrajOpis" Width="82" />
+        <ColumnInfo Id="CompoundKey.VatOpisy" Width="184" />
+        <ColumnInfo Id="CompoundKey.VatSposoby" Width="204" />
+        <ColumnInfo Id="CompoundKey.Kraje" Width="159" />
+      </Columns>
+    </ListView>
     <ListView Id="ZamowieniaTyp_ListView">
       <Columns>
         <ColumnInfo Id="Opis" SortIndex="0" SortOrder="Ascending" Width="125" />
