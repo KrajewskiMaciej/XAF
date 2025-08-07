@@ -1,9 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
-  <Options UIType="TabbedMDI"
-         RestoreTabbedMdiLayout="True"
-         ShowTabImage="True">
-  </Options>
   <NavigationItems NavigationStyle="Accordion">
+    <Items>
+      <Item Id="Default">
+        <Items>
+          <Item Id="VatOpisy_ListView" ImageName="BO_Sale_Item" />
+          <Item Id="VatPowiazania_ListView" ImageName="BO_Sale_Item" />
+          <Item Id="VatSposoby_ListView" ImageName="BO_Sale_Item" />
+          <Item Id="VatWartosci_ListView" ImageName="BO_Sale_Item" />
+        </Items>
+      </Item>
+      <Item Id="Tagi_ListView" ImageName="EmployeeSummary" />
+    </Items>
   </NavigationItems>
+  <Options UIType="TabbedMDI" RestoreTabbedMdiLayout="True" ShowTabImage="True" />
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="25.1.3.0" IsNewNode="True" />
+  </SchemaModules>
 </Application>

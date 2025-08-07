@@ -1,5 +1,50 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="DXApplication">
-  <Views>
-  </Views>
+  <NavigationItems>
+    <Items>
+      <Item Id="AutoNumSchemat_ListView" ViewId="AutoNumSchemat_ListView" ObjectKey="" ImageName="ListNumbers" IsNewNode="True" />
+      <Item Id="Default" Caption="VAT" ImageName="LayoutCustomization_Group">
+        <Items>
+          <Item Id="AutoNumSchemat_ListView" Removed="True" />
+          <Item Id="Jednostki_ListView" Removed="True" />
+          <Item Id="Jezyki_ListView" Removed="True" />
+          <Item Id="Klient_ListView" Removed="True" />
+          <Item Id="KodyTransakcji_ListView" Removed="True" />
+          <Item Id="Kraje_ListView" Removed="True" />
+          <Item Id="Mandant_ListView" Removed="True" />
+          <Item Id="PlanPracy_ListView" Removed="True" />
+          <Item Id="SchematyAutokodowania_ListView" Removed="True" />
+          <Item Id="SloKursyWaluty_ListView" Removed="True" />
+          <Item Id="Tagi_ListView" Removed="True" />
+          <Item Id="VatOpisy_ListView" ViewId="VatOpisy_ListView" ObjectKey="" IsNewNode="True" Removed="True" />
+          <Item Id="VatPowiazania_ListView" ViewId="VatPowiazania_ListView" ObjectKey="" IsNewNode="True" Removed="True" />
+          <Item Id="VatSposoby_ListView" ViewId="VatSposoby_ListView" ObjectKey="" IsNewNode="True" Removed="True" />
+          <Item Id="VatWartosci_ListView" ViewId="VatWartosci_ListView" ObjectKey="" IsNewNode="True" Removed="True" />
+          <Item Id="Waluta_ListView" Removed="True" />
+          <Item Id="Wydruki_ListView" Removed="True" />
+          <Item Id="Wydzial_ListView" Removed="True" />
+          <Item Id="Zaklad_ListView" Removed="True" />
+          <Item Id="ZamowieniaTyp_ListView" Removed="True" />
+        </Items>
+      </Item>
+      <Item Id="Jednostki_ListView" ViewId="Jednostki_ListView" ObjectKey="" ImageName="BarCodeShowText" IsNewNode="True" />
+      <Item Id="Jezyki_ListView" ViewId="Jezyki_ListView" ObjectKey="" ImageName="Language" IsNewNode="True" />
+      <Item Id="Klient_ListView" ViewId="Klient_ListView" ObjectKey="" ImageName="BO_Lead" IsNewNode="True" />
+      <Item Id="KodyTransakcji_ListView" ViewId="KodyTransakcji_ListView" ObjectKey="" ImageName="CustomerQuickSales" IsNewNode="True" />
+      <Item Id="Kraje_ListView" ViewId="Kraje_ListView" ObjectKey="" ImageName="BO_Country_v92" IsNewNode="True" />
+      <Item Id="Mandant_ListView" ViewId="Mandant_ListView" ObjectKey="" ImageName="BO_Organization" IsNewNode="True" />
+      <Item Id="PlanPracy_ListView" ViewId="PlanPracy_ListView" ObjectKey="" ImageName="BO_Appointment" IsNewNode="True" />
+      <Item Id="SchematyAutokodowania_ListView" ViewId="SchematyAutokodowania_ListView" ObjectKey="" ImageName="Shopping_Barcode" IsNewNode="True" />
+      <Item Id="SloKursyWaluty_ListView" ViewId="SloKursyWaluty_ListView" ObjectKey="" ImageName="Currency" IsNewNode="True" />
+      <Item Id="Tagi_ListView" ViewId="Tagi_ListView" ObjectKey="" IsNewNode="True" />
+      <Item Id="Waluta_ListView" ViewId="Waluta_ListView" ObjectKey="" ImageName="Currency" IsNewNode="True" />
+      <Item Id="Wydruki_ListView" ViewId="Wydruki_ListView" ObjectKey="" ImageName="Print" IsNewNode="True" />
+      <Item Id="Wydzial_ListView" ViewId="Wydzial_ListView" ObjectKey="" ImageName="BO_Department" IsNewNode="True" />
+      <Item Id="Zaklad_ListView" ViewId="Zaklad_ListView" ObjectKey="" ImageName="BO_Organization" IsNewNode="True" />
+      <Item Id="ZamowieniaTyp_ListView" ViewId="ZamowieniaTyp_ListView" ObjectKey="" ImageName="BO_Order" IsNewNode="True" />
+    </Items>
+  </NavigationItems>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="25.1.3.0" IsNewNode="True" />
+  </SchemaModules>
 </Application>
