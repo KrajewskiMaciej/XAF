@@ -26,3 +26,7 @@ app {
     height: 100%;
     z-index: 100001;
 }
+
+.sidebar * {
+    text-decoration: none !important;
+}
