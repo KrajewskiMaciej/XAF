@@ -17,4 +17,61 @@
   <SchemaModules>
     <SchemaModule Name="SystemModule" Version="25.1.3.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <ListView Id="AutoNumSchemat_ListView">
+      <Columns>
+        <ColumnInfo Id="AUTO_NUM_SCHEMAT_ID" SortIndex="0" SortOrder="Ascending" Width="54" />
+        <ColumnInfo Id="AUTO_NUM_SCHEMAT_KOD" Width="88" />
+        <ColumnInfo Id="TYP" Width="81" />
+        <ColumnInfo Id="SCHEMAT" Width="110" />
+        <ColumnInfo Id="SEPARATOR" Width="104" />
+        <ColumnInfo Id="SEPARATOR_OPIS" Width="84" />
+        <ColumnInfo Id="ZNAK_1" Width="74" />
+        <ColumnInfo Id="RESET_TYP" Width="128" />
+        <ColumnInfo Id="LICZBA_CYFR_W_NR_KOL" Width="153" />
+        <ColumnInfo Id="INS_DATE" Width="129" />
+        <ColumnInfo Id="INSERTED_BY" Width="136" />
+        <ColumnInfo Id="SCHEMAT_KOD" Width="125" />
+        <ColumnInfo Id="SCHEMAT_OPIS" Width="125" />
+        <ColumnInfo Id="AUTO_NUM_SCHEMAT_OPIS" Width="210" />
+      </Columns>
+    </ListView>
+    <ListView Id="AutoNumSchemat_ZamowieniaTypy_ListView">
+      <Columns>
+        <ColumnInfo Id="Rodzaj" Width="103" />
+        <ColumnInfo Id="Produkcja" Width="79" />
+        <ColumnInfo Id="KontrolujKlucz" Width="70" />
+      </Columns>
+    </ListView>
+    <ListView Id="ZamowieniaTyp_ListView">
+      <Columns>
+        <ColumnInfo Id="Opis" SortIndex="0" SortOrder="Ascending" Width="125" />
+        <ColumnInfo Id="Rodzaj" Width="94" />
+        <ColumnInfo Id="Produkcja" Width="110" />
+        <ColumnInfo Id="KontrolujKlucz" Width="124" />
+        <ColumnInfo Id="KontrolujKluczKlienta" Width="174" />
+        <ColumnInfo Id="NrZam2Klucz" Width="125" />
+        <ColumnInfo Id="KontrolujKomisje" Width="142" />
+        <ColumnInfo Id="NumerStart" Width="104" />
+        <ColumnInfo Id="InsertedBy" Width="97" />
+        <ColumnInfo Id="InsertedDate" Width="113" />
+        <ColumnInfo Id="Editing" Width="94" />
+        <ColumnInfo Id="EdiDate" Width="81" />
+        <ColumnInfo Id="SchematPrzyklad" Width="140" />
+        <ColumnInfo Id="Autonumer" Width="129" />
+        <ColumnInfo Id="ZamowieniaTypKod" Width="165" />
+        <ColumnInfo Id="EdiKod" Width="76" />
+        <ColumnInfo Id="BookingRules" Width="118" />
+        <ColumnInfo Id="WykluczZMatDetSeria" Width="182" />
+        <ColumnInfo Id="BookingAnonymousLevel" Width="199" />
+        <ColumnInfo Id="KontrolaWysylki" Width="134" />
+        <ColumnInfo Id="AutoNumSchemat" Width="153" />
+      </Columns>
+    </ListView>
+    <ListView Id="ZamowieniaTyp_LookupListView">
+      <Columns>
+        <ColumnInfo Id="Rodzaj" Width="61" />
+      </Columns>
+    </ListView>
+  </Views>
 </Application>
