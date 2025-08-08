@@ -1,51 +1,58 @@
-﻿using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
+using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("SYS_DOK_ZAS")]
-    [DefaultProperty("SYS_DOK_ZAS")]
-    public class Wydruki : XPLiteObject
+    [Table("SYS_DOK_ZAS")] // Zamiast [Persistent] na klasie
+    [XafDefaultProperty(nameof(WydrukiOpis))] // Poprawiony atrybut z oryginalnego kodu
+    public class Wydruki
     {
-        public Wydruki(Session session) : base(session) { }
+        // Konstruktor XPO został usunięty
 
-        [Key(true)]
-        [Persistent("SYS_DOK_ZAS_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Odpowiednik XPO [Key(true)]
+        [Column("SYS_DOK_ZAS_ID")]
         [Browsable(false)]
-        public int WydrukID { get; set; }
+        public virtual int WydrukID { get; set; }
 
-        [Persistent("RAPORT_KATEGORIA")]
-        public int Kategoria { get; set; }
+        // --- Relacja do Kategoria ---
+        [Column("RAPORT_KATEGORIA")]
+        public virtual int? KategoriaId { get; set; } // Jawna właściwość klucza obcego (nullable dla bezpieczeństwa)
 
-        [Persistent("SYS_DOK_ZAS_KOD")]
-        public string WydrukiKod { get; set; }
+        [ForeignKey(nameof(KategoriaId))]
+        public virtual SysDokZasKategoria Kategoria { get; set; } // Właściwość nawigacyjna
 
-        [Persistent("SYS_DOK_KOD_OPIS")]
-        public string WydrukiOpis { get; set; }
+        // --- Pozostałe właściwości ---
+        [Column("SYS_DOK_ZAS_KOD")]
+        public virtual string WydrukiKod { get; set; }
 
-        [Persistent("RAPORT")]
-        public string Raport { get; set; }
+        [Column("SYS_DOK_KOD_OPIS")]
+        public virtual string WydrukiOpis { get; set; }
 
-        [Persistent("WIDOCZNY")]
-        public short Widoczny { get; set; }
+        [Column("RAPORT")]
+        public virtual string Raport { get; set; }
 
-        [Persistent("ARCHIWIZUJ")]
-        public short Archiwizuj { get; set; }
+        [Column("WIDOCZNY")]
+        public virtual short? Widoczny { get; set; } // short -> short?
 
-        [Persistent("INSERTED_BY")]
-        public string UtworzonyPrzez { get; set; }
+        [Column("ARCHIWIZUJ")]
+        public virtual short? Archiwizuj { get; set; } // short -> short?
 
-        [Persistent("INS_DATE")]
-        public DateTime DataDodania { get; set; }
+        [Column("INSERTED_BY")]
+        public virtual string UtworzonyPrzez { get; set; }
 
-        [Persistent("EDITING")]
-        public string EdytowanyPrzez { get; set; }
+        [Column("INS_DATE")]
+        public virtual DateTime? DataDodania { get; set; } // DateTime -> DateTime?
 
-        [Persistent("EDI_DATE")]
-        public DateTime DataEdycji { get; set; }
+        [Column("EDITING")]
+        public virtual string EdytowanyPrzez { get; set; }
 
-
+        [Column("EDI_DATE")]
+        public virtual DateTime? DataEdycji { get; set; } // DateTime -> DateTime?
     }
 }
+

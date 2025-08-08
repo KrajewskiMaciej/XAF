@@ -1,55 +1,47 @@
-﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
+using System.Collections.Generic;
 using System.ComponentModel;
-using DevExpress.Xpo.Metadata; // Dodany using dla [SequenceGenerator]
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("VAT_OPISY")]
+    [Table("VAT_OPISY")]
     [XafDefaultProperty(nameof(Opis))]
-    [OptimisticLocking(false)]
-    public class VatOpisy : XPLiteObject
+    public class VatOpisy
     {
-        public VatOpisy(Session session) : base(session) { }
+        // Konstruktor XPO został usunięty
 
-        // --- POPRAWKA: ZMIANA SPOSOBU GENEROWANIA KLUCZA GŁÓWNEGO ---
-        private int _VatOpisyId;
-        [Key(AutoGenerate = true)] // Zamiast Key(false)
-        [Persistent("VAT_OPISY_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Odpowiednik XPO [Key(AutoGenerate = true)]
+        [Column("VAT_OPISY_ID")]
         [Browsable(false)]
-        public int VatOpisyId
-        {
-            get => _VatOpisyId;
-            set => SetPropertyValue(nameof(VatOpisyId), ref _VatOpisyId, value);
-        }
+        public virtual int VatOpisyId { get; set; }
 
-        private string _Kod;
-        [Persistent("VAT_OPISY_KOD"), Size(20)]
+        [Column("VAT_OPISY_KOD")]
+        [StringLength(20)] // Zamiast [Size(20)]
         [XafDisplayName("Kod Opisu VAT")]
-        public string Kod
-        {
-            get => _Kod;
-            set => SetPropertyValue(nameof(Kod), ref _Kod, value);
-        }
+        public virtual string Kod { get; set; }
 
-        private string _Opis;
-        [Persistent("VAT_OPISY_OPIS"), Size(255)]
+        [Column("VAT_OPISY_OPIS")]
+        [StringLength(255)] // Zamiast [Size(255)]
         [XafDisplayName("Opis VAT")]
-        public string Opis
-        {
-            get => _Opis;
-            set => SetPropertyValue(nameof(Opis), ref _Opis, value);
-        }
+        public virtual string Opis { get; set; }
 
-        [Association("VatOpisy-VatPowiazania")]
-        public XPCollection<VatPowiazania> Powiazania => GetCollection<VatPowiazania>(nameof(Powiazania));
-
-        // Metoda AfterConstruction() nie jest już potrzebna do generowania ID
-        public override void AfterConstruction()
-        {
-            base.AfterConstruction();
-        }
+        // --- Konwersja relacji jeden-do-wielu ---
+        public virtual ICollection<VatPowiazania> Powiazania { get; set; } = new List<VatPowiazania>();
     }
+
+    // UWAGA: Aby powyższy kod działał poprawnie, musisz również przekonwertować klasę VatPowiazania.
+    // Powinna ona zawierać klucz obcy (np. VatOpisyId) i właściwość nawigacyjną wskazującą z powrotem na klasę VatOpisy.
+    //
+    // public class VatPowiazania
+    // {
+    //     // ... inne właściwości
+    //
+    //     public int VatOpisyId { get; set; } // Klucz obcy
+    //     public virtual VatOpisy VatOpisy { get; set; } // Właściwość nawigacyjna
+    // }
 }

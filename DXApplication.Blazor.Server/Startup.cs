@@ -1,11 +1,19 @@
-﻿using DevExpress.ExpressApp.ApplicationBuilder;
+﻿using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor.Services;
 using DevExpress.Persistent.Base;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Server.Circuits;
-using DevExpress.ExpressApp.Xpo;
+using Microsoft.EntityFrameworkCore;
 using DXApplication.Blazor.Server.Services;
+using DevExpress.Persistent.BaseImpl.EF.PermissionPolicy;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace DXApplication.Blazor.Server;
 
@@ -41,8 +49,13 @@ public class Startup
                 .Add<DXApplication.Module.DXApplicationModule>()
                 .Add<DXApplicationBlazorModule>();
             builder.ObjectSpaceProviders
-                .AddXpo((serviceProvider, options) =>
+                .AddEFCore(options =>
                 {
+                    options.PreFetchReferenceProperties();
+                    
+                })
+                .WithDbContext<DXApplication.Module.BusinessObjects.DXApplicationEFCoreDbContext>((serviceProvider, options) =>
+                              {
                     string connectionString = null;
                     if (Configuration.GetConnectionString("ConnectionString") != null)
                     {
@@ -54,23 +67,20 @@ public class Startup
                     }
 #endif
                     ArgumentNullException.ThrowIfNull(connectionString);
-                    options.ConnectionString = connectionString;
-                    options.ThreadSafe = true;
-                    options.UseSharedDataStoreProvider = true;
+                    options.UseFirebird(connectionString);
+
+
                 })
                 .AddNonPersistent();
         });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
-        {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        if(env.IsDevelopment()) {
             app.UseDeveloperExceptionPage();
         }
-        else
-        {
+        else {
             app.UseExceptionHandler("/Error");
             // The default HSTS value is 30 days. To change this for production scenarios, see: https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
@@ -80,8 +90,7 @@ public class Startup
         app.UseStaticFiles();
         app.UseRouting();
         app.UseXaf();
-        app.UseEndpoints(endpoints =>
-        {
+        app.UseEndpoints(endpoints => {
             endpoints.MapXafEndpoints();
             endpoints.MapBlazorHub();
             endpoints.MapFallbackToPage("/_Host");

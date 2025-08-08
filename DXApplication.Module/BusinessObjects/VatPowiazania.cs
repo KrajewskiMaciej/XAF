@@ -1,150 +1,111 @@
-﻿using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
-using System.ComponentModel;
 using DevExpress.ExpressApp.DC;
-using System;
 using DevExpress.ExpressApp.Model;
+using DevExpress.Persistent.Base;
+using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
-    // KROK 1: Zdefiniuj strukturę dla klucza złożonego
-    // Ta struktura nie jest mapowana do tabeli, jest tylko kontenerem na pola klucza.
-    public struct VatPowiazaniaKey
-    {
-        [Persistent("VAT_OPISY_ID")]
-        [Association("VatOpisy-VatPowiazania")]
-        public VatOpisy VatOpisy { get; set; }
-
-        [Persistent("VAT_SPOSOBY_ID")]
-        [Association("VatSposoby-VatPowiazania")]
-        public VatSposoby VatSposoby { get; set; }
-
-        [Persistent("KRAJE_ID")]
-        [Association("Kraje-VatPowiazania")]
-        public Kraje Kraje { get; set; }
-    }
-
-
     [DefaultClassOptions]
-    [Persistent("VAT_POWIAZANIA")]
-    [OptimisticLocking(false)]
+    [Table("VAT_POWIAZANIA")]
     [XafDefaultProperty(nameof(DisplayMember))]
-    public class VatPowiazania : XPLiteObject
+    public class VatPowiazania
     {
-        public VatPowiazania(Session session) : base(session) { }
+        // Konstruktor XPO został usunięty.
+        // Struktura VatPowiazaniaKey i pole CompoundKey zostały usunięte.
 
-        // KROK 2: Zadeklaruj klucz złożony jako jedno pole typu struktury
-        // Użyj publicznego pola, a nie właściwości, dla kluczy strukturalnych.
-        [Key, Persistent]
-        public VatPowiazaniaKey CompoundKey;
+        // --- CZĘŚĆ 1: DEFINICJA KOLUMN KLUCZA ZŁOŻONEGO ---
+        // Te właściwości tworzą klucz złożony. W EF Core definicję klucza
+        // konfiguruje się w DbContext za pomocą Fluent API.
 
-        // KROK 3: Usuń stare definicje kluczy i zastąp je właściwościami odwołującymi się do klucza złożonego
-        // Te właściwości są potrzebne, aby reszta kodu (np. właściwości NonPersistent) działała bez zmian.
-        // Używamy PersistentAlias, aby XPO wiedziało, skąd brać dane.
-        [PersistentAlias("CompoundKey.VatOpisy")]
-        public VatOpisy VatOpisy => CompoundKey.VatOpisy;
-        
-        [PersistentAlias("CompoundKey.VatSposoby")]
-        public VatSposoby VatSposoby => CompoundKey.VatSposoby;
+        [Column("VAT_OPISY_ID")]
+        public virtual int VatOpisyId { get; set; }
 
-        [PersistentAlias("CompoundKey.Kraje")]
-        public Kraje Kraje => CompoundKey.Kraje;
+        [Column("VAT_SPOSOBY_ID")]
+        public virtual int VatSposobyId { get; set; }
+
+        [Column("KRAJE_ID")]
+        public virtual int KrajeId { get; set; }
 
 
-        private VatWartosci _vatWartosci;
-        [Association("VatWartosci-VatPowiazania")]
-        [Persistent("VAT_WARTOSCI_ID")]
-        public VatWartosci VatWartosci
-        {
-            get => _vatWartosci;
-            set => SetPropertyValue(nameof(VatWartosci), ref _vatWartosci, value);
-        }
+        // --- CZĘŚĆ 2: WŁAŚCIWOŚCI NAWIGACYJNE DLA KLUCZA ZŁOŻONEGO ---
+        // Łączymy właściwości nawigacyjne z odpowiednimi kolumnami klucza obcego.
 
-        // --- POLA AUDYTOWE Z TABELI VAT_POWIAZANIA ---
-        // (reszta kodu pozostaje bez zmian)
-        private string _insertedBy;
-        [Persistent("INSERTED_BY")]
+        [ForeignKey(nameof(VatOpisyId))]
+        public virtual VatOpisy VatOpisy { get; set; }
+
+        [ForeignKey(nameof(VatSposobyId))]
+        public virtual VatSposoby VatSposoby { get; set; }
+
+        [ForeignKey(nameof(KrajeId))]
+        public virtual Kraje Kraje { get; set; }
+
+
+        // --- CZĘŚĆ 3: POZOSTAŁE RELACJE I POLA ---
+        // Relacja do VatWartosci (opcjonalna, na podstawie LEFT JOIN w SQL)
+        [Column("VAT_WARTOSCI_ID")]
+        public virtual int? VatWartosciId { get; set; }
+
+        [ForeignKey(nameof(VatWartosciId))]
+        public virtual VatWartosci VatWartosci { get; set; }
+
+        // --- Pola audytowe ---
+        [Column("INSERTED_BY")]
         [ModelDefault("AllowEdit", "False")]
         [XafDisplayName("Wstawiony przez")]
-        public string InsertedBy
-        {
-            get => _insertedBy;
-            set => SetPropertyValue(nameof(InsertedBy), ref _insertedBy, value);
-        }
+        public virtual string InsertedBy { get; set; }
 
-        private DateTime? _insDate;
-        [Persistent("INS_DATE")]
+        [Column("INS_DATE")]
         [ModelDefault("AllowEdit", "False")]
         [XafDisplayName("Data wstawienia")]
-        public DateTime? InsDate
-        {
-            get => _insDate;
-            set => SetPropertyValue(nameof(InsDate), ref _insDate, value);
-        }
-
-        private string _inserting;
-        [Persistent("INSERTING")]
-        [ModelDefault("AllowEdit", "False")]
-        [XafDisplayName("Wstawiający")]
-        public string Inserting
-        {
-            get => _inserting;
-            set => SetPropertyValue(nameof(Inserting), ref _inserting, value);
-        }
-
-        private string _editing;
-        [Persistent("EDITING")]
+        public virtual DateTime? InsDate { get; set; }
+        
+        // ... pozostałe pola audytowe (Editing, EdiDate etc.) w ten sam sposób
+        [Column("EDITING")]
         [ModelDefault("AllowEdit", "False")]
         [XafDisplayName("Edytujący")]
-        public string Editing
-        {
-            get => _editing;
-            set => SetPropertyValue(nameof(Editing), ref _editing, value);
-        }
+        public virtual string Editing { get; set; }
 
-        private DateTime? _ediDate;
-        [Persistent("EDI_DATE")]
+        [Column("EDI_DATE")]
         [ModelDefault("AllowEdit", "False")]
         [XafDisplayName("Data edycji")]
-        public DateTime? EdiDate
-        {
-            get => _ediDate;
-            set => SetPropertyValue(nameof(EdiDate), ref _ediDate, value);
-        }
+        public virtual DateTime? EdiDate { get; set; }
 
-        // --- WŁAŚCIWOŚCI NIETRWAŁE (NON-PERSISTENT) DO WYŚWIETLANIA W UI ---
-        // Ta część nie wymaga zmian, ponieważ właściwości VatOpisy, VatSposoby i Kraje nadal istnieją.
-        [NonPersistent]
+
+        // --- CZĘŚĆ 4: WŁAŚCIWOŚCI NIEMAPOWANE (NON-PERSISTENT) ---
+        // Logika pozostaje identyczna, ale atrybut zmienia się na [NotMapped].
+        [NotMapped]
         [XafDisplayName("VAT kod")]
-        public string VatKod => VatOpisy?.Kod;
+        public virtual string VatKod => VatOpisy?.Kod;
 
-        [NonPersistent]
+        [NotMapped]
         [XafDisplayName("VAT opis")]
-        public string VatOpis => VatOpisy?.Opis;
+        public virtual string VatOpis => VatOpisy?.Opis;
 
-        [NonPersistent]
+        [NotMapped]
         [XafDisplayName("VAT sposób kod")]
-        public string VatSposobKod => VatSposoby?.Kod;
+        public virtual string VatSposobKod => VatSposoby?.Kod;
 
-        [NonPersistent]
+        [NotMapped]
         [XafDisplayName("VAT sposób opis")]
-        public string VatSposobOpis => VatSposoby?.Opis;
+        public virtual string VatSposobOpis => VatSposoby?.Opis;
 
-        [NonPersistent]
+        [NotMapped]
         [XafDisplayName("VAT wartosc")]
-        public decimal? Wartosc => VatWartosci?.Wartosc;
+        public virtual decimal? Wartosc => VatWartosci?.Wartosc;
 
-        [NonPersistent]
+        [NotMapped]
         [XafDisplayName("Kraj kod")]
-        public string KrajKod => Kraje?.Kod;
+        public virtual string KrajKod => Kraje?.Kod;
 
-        [NonPersistent]
+        [NotMapped]
         [XafDisplayName("Kraj opis")]
-        public string KrajOpis => Kraje?.Opis;
-
-        // --- Właściwość do wyświetlania w polach wyboru itp. ---
-        [NonPersistent]
+        public virtual string KrajOpis => Kraje?.Opis;
+        
+        [NotMapped]
         [Browsable(false)]
-        public string DisplayMember => $"{VatKod} ({KrajKod}) - {Wartosc}%";
+        public virtual string DisplayMember => $"{VatKod} ({KrajKod}) - {Wartosc}%";
     }
 }

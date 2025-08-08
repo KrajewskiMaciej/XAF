@@ -1,89 +1,80 @@
-﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.ConditionalAppearance;
+using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp.ConditionalAppearance;
-using System;
 using System.ComponentModel;
-
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("JEDNOSTKI")]
+    [Table("JEDNOSTKI")] // Zamiast [Persistent]
     [XafDefaultProperty(nameof(JEDNOSTKI_OPIS))]
-    public class Jednostki : XPLiteObject
+    public class Jednostki
     {
-        public Jednostki(Session session) : base(session) { }
+        // Konstruktor i metoda AfterConstruction zostały usunięte.
 
-        private int _JEDNOSTKI_ID;
-
-        [Key(false)]
-        [Persistent("JEDNOSTKI_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] // Odpowiednik [Key(false)] - aplikacja sama zarządza wartością klucza
+        [Column("JEDNOSTKI_ID")]
         [Browsable(false)]
         [Appearance("DisableJEDNOSTKI_ID", Enabled = false, Criteria = "True", Context = "DetailView")]
         [XafDisplayName("ID")]
-        public int JEDNOSTKI_ID
-        {
-            get => _JEDNOSTKI_ID;
-            set => SetPropertyValue(nameof(JEDNOSTKI_ID), ref _JEDNOSTKI_ID, value);
-        }
+        public virtual int JEDNOSTKI_ID { get; set; }
 
+        // --- Obsługa TrimEnd() ---
+        // Używamy prywatnego pola do mapowania do bazy i publicznej właściwości z logiką
         private string _JEDNOSTKI_KOD;
 
-        [Persistent("JEDNOSTKI_KOD")]
-        [Size(15)]
+        [Column("JEDNOSTKI_KOD")]
+        [StringLength(15)] // Zamiast [Size(15)]
+        [Browsable(false)] // Ukrywamy pole "surowe"
+        public virtual string RawKod
+        {
+            get => _JEDNOSTKI_KOD;
+            set => _JEDNOSTKI_KOD = value;
+        }
+
+        [NotMapped] // Ta właściwość nie jest mapowana do bazy, jest tylko do użytku UI
         [XafDisplayName("Jednostka kod")]
         [ModelDefault("Index", "0")]
-        public string JEDNOSTKI_KOD
+        public virtual string JEDNOSTKI_KOD
         {
-            get => _JEDNOSTKI_KOD?.TrimEnd();
-            set => SetPropertyValue(nameof(JEDNOSTKI_KOD), ref _JEDNOSTKI_KOD, value);
+            get => RawKod?.TrimEnd();
+            set => RawKod = value;
         }
 
+        // --- Powtórzenie wzorca dla drugiej właściwości ---
         private string _JEDNOSTKI_OPIS;
+        
+        [Column("JEDNOSTKI_OPIS")]
+        [StringLength(50)]
+        [Browsable(false)]
+        public virtual string RawOpis
+        {
+            get => _JEDNOSTKI_OPIS;
+            set => _JEDNOSTKI_OPIS = value;
+        }
 
-        [Persistent("JEDNOSTKI_OPIS")]
-        [Size(50)]
+        [NotMapped]
         [XafDisplayName("Jednostka opis")]
         [ModelDefault("Index", "1")]
-        public string JEDNOSTKI_OPIS
+        public virtual string JEDNOSTKI_OPIS
         {
-            get => _JEDNOSTKI_OPIS?.TrimEnd();
-            set => SetPropertyValue(nameof(JEDNOSTKI_OPIS), ref _JEDNOSTKI_OPIS, value);
+            get => RawOpis?.TrimEnd();
+            set => RawOpis = value;
         }
 
-        private bool? _PRZELICZENIOWA;
 
-        [Persistent("PRZELICZENIOWA")]
+        [Column("PRZELICZENIOWA")]
         [XafDisplayName("Przeliczeniowa")]
         [ModelDefault("Index", "2")]
-        public bool? PRZELICZENIOWA
-        {
-            get => _PRZELICZENIOWA;
-            set => SetPropertyValue(nameof(PRZELICZENIOWA), ref _PRZELICZENIOWA, value);
-        }
+        public virtual bool? PRZELICZENIOWA { get; set; }
 
-        private bool? _NIEPODZIELNA;
-
-        [Persistent("NIEPODZIELNA")]
+        [Column("NIEPODZIELNA")]
         [XafDisplayName("Niepodzielna")]
         [ModelDefault("Index", "3")]
-        public bool? NIEPODZIELNA
-        {
-            get => _NIEPODZIELNA;
-            set => SetPropertyValue(nameof(NIEPODZIELNA), ref _NIEPODZIELNA, value);
-        }
-
-        public override void AfterConstruction()
-        {
-            base.AfterConstruction();
-            if (JEDNOSTKI_ID == 0)
-            {
-                var maxIdObj = Session.ExecuteScalar("SELECT COALESCE(MAX(JEDNOSTKI_ID),0) FROM JEDNOSTKI");
-                JEDNOSTKI_ID = Convert.ToInt32(maxIdObj) + 1;
-            }
-        }
+        public virtual bool? NIEPODZIELNA { get; set; }
     }
 }

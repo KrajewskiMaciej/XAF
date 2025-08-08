@@ -1,87 +1,90 @@
-﻿using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
-using System;
-using System.Collections.Generic;
+using DevExpress.Persistent.Base;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("ZAMOWIENIA_TYP")]
-    public class ZamowieniaTyp : XPLiteObject
+    [Table("ZAMOWIENIA_TYP")] // Zamiast [Persistent]
+    public class TypyZamowienia
     {
-        public ZamowieniaTyp(Session session) : base(session) { }
+        // Konstruktor XPO został usunięty
 
-        [Key(true)]
-        [Persistent("ZAMOWIENIA_TYP_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Odpowiednik XPO [Key(true)]
+        [Column("ZAMOWIENIA_TYP_ID")]
         [Browsable(false)]
-        public int ZamowieniaTypId { get; set; }
+        public virtual int ZamowieniaTypId { get; set; }
 
-        [Persistent("ZAMOWIENIA_TYP_OPIS")]
-        public string Opis { get; set; }
+        [Column("ZAMOWIENIA_TYP_OPIS")]
+        public virtual string Opis { get; set; }
 
-        [Persistent("ZAMOWIENIE_RODZAJ")]
-        public string Rodzaj { get; set; }
+        [Column("ZAMOWIENIE_RODZAJ")]
+        public virtual string Rodzaj { get; set; }
 
-        [Persistent("PRODUKCJA")]
-        public bool Produkcja { get; set; }
+        // --- Pola wartościowe zamienione na nullowalne dla bezpieczeństwa ---
 
-        [Persistent("KONTROLUJ_KLUCZ")]
-        public bool KontrolujKlucz { get; set; }
+        [Column("PRODUKCJA")]
+        public virtual bool? Produkcja { get; set; }
 
-        [Persistent("KONTROLUJ_KLUCZ_KLIENTA")]
-        public bool KontrolujKluczKlienta { get; set; }
+        [Column("KONTROLUJ_KLUCZ")]
+        public virtual bool? KontrolujKlucz { get; set; }
 
-        [Persistent("NR_ZAM2KLUCZ")]
-        public bool NrZam2Klucz { get; set; }
+        [Column("KONTROLUJ_KLUCZ_KLIENTA")]
+        public virtual bool? KontrolujKluczKlienta { get; set; }
 
-        [Persistent("KONTROLUJ_KOMISJE")]
-        public bool KontrolujKomisje { get; set; }
+        [Column("NR_ZAM2KLUCZ")]
+        public virtual bool? NrZam2Klucz { get; set; }
 
-        [Persistent("NUMER_START")]
-        public int NumerStart { get; set; }
+        [Column("KONTROLUJ_KOMISJE")]
+        public virtual bool? KontrolujKomisje { get; set; }
 
-        [Persistent("INSERTED_BY")]
-        public string InsertedBy { get; set; }
+        [Column("NUMER_START")]
+        public virtual int? NumerStart { get; set; }
 
-        [Persistent("INS_DATE")]
-        public DateTime? InsertedDate { get; set; }
+        [Column("INSERTED_BY")]
+        public virtual string InsertedBy { get; set; }
 
-        [Persistent("EDITING")]
-        public string Editing { get; set; }
+        [Column("INS_DATE")]
+        public virtual DateTime? InsertedDate { get; set; } // Już było nullable, co jest poprawne
 
-        [Persistent("EDI_DATE")]
-        public DateTime? EdiDate { get; set; }
+        [Column("EDITING")]
+        public virtual string Editing { get; set; }
 
-        [Persistent("SCHEMAT_PRZYKLAD")]
-        public string SchematPrzyklad { get; set; }
+        [Column("EDI_DATE")]
+        public virtual DateTime? EdiDate { get; set; } // Już było nullable, co jest poprawne
 
-        [Persistent("AUTONUMER")]
-        public bool Autonumer { get; set; }
+        [Column("SCHEMAT_PRZYKLAD")]
+        public virtual string SchematPrzyklad { get; set; }
 
-        [Persistent("ZAMOWIENIA_TYP_KOD")]
-        public string ZamowieniaTypKod { get; set; }
+        [Column("AUTONUMER")]
+        public virtual bool? Autonumer { get; set; }
 
-        [Persistent("EDI_KOD")]
-        public string EdiKod { get; set; }
+        [Column("ZAMOWIENIA_TYP_KOD")]
+        public virtual string ZamowieniaTypKod { get; set; }
 
-        [Persistent("BOOKING_RULES")]
-        public string BookingRules { get; set; }
+        [Column("EDI_KOD")]
+        public virtual string EdiKod { get; set; }
 
-        [Persistent("WYKLUCZ_Z_MAT_DET_SERIA")]
-        public bool WykluczZMatDetSeria { get; set; }
+        [Column("BOOKING_RULES")]
+        public virtual string BookingRules { get; set; }
 
-        [Persistent("BOOKING_ANONYMOUS_LEVEL")]
-        public int BookingAnonymousLevel { get; set; }
+        [Column("WYKLUCZ_Z_MAT_DET_SERIA")]
+        public virtual bool? WykluczZMatDetSeria { get; set; }
 
-        [Persistent("KONTROLA_WYSYLKI")]
-        public bool KontrolaWysylki { get; set; }
+        [Column("BOOKING_ANONYMOUS_LEVEL")]
+        public virtual int? BookingAnonymousLevel { get; set; }
 
-        [Association("AutoNumSchemat-ZamowieniaTypy")]
-        [Persistent("AUTO_NUM_SCHEMAT_ID")]
-        public AutoNumSchemat AutoNumSchemat { get; set; }
+        [Column("KONTROLA_WYSYLKI")]
+        public virtual bool? KontrolaWysylki { get; set; }
+
+        // --- Relacja do AutoNumSchemat (opcjonalna) ---
+
+        [Column("AUTO_NUM_SCHEMAT_ID")]
+        public virtual int? AutoNumSchematId { get; set; } // Klucz obcy (musi być nullable, bo jest LEFT JOIN)
+
+        [ForeignKey(nameof(AutoNumSchematId))]
+        public virtual AutoNumSchemat AutoNumSchemat { get; set; } // Właściwość nawigacyjna
     }
 }

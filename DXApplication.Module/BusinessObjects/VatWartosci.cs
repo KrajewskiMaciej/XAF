@@ -1,66 +1,40 @@
-﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("VAT_WARTOSCI")]
+    [Table("VAT_WARTOSCI")]
     [XafDefaultProperty(nameof(Kod))]
-    [OptimisticLocking(false)]
-    public class VatWartosci : XPLiteObject
+    public class VatWartosci
     {
-        public VatWartosci(Session session) : base(session) { }
+        // Konstruktor i metoda AfterConstruction zostały usunięte
 
-        private int _VatWartosciId;
-        [Key(false)] 
-        [Persistent("VAT_WARTOSCI_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] // Odpowiednik XPO [Key(false)]
+        [Column("VAT_WARTOSCI_ID")]
         [Browsable(false)]
-        public int VatWartosciId
-        {
-            get => _VatWartosciId;
-            set => SetPropertyValue(nameof(VatWartosciId), ref _VatWartosciId, value);
-        }
+        public virtual int VatWartosciId { get; set; }
 
-        private string _Kod;
-        [Persistent("VAT_WARTOSCI_KOD"), Size(20)]
+        [Column("VAT_WARTOSCI_KOD")]
+        [StringLength(20)] // Zamiast [Size(20)]
         [XafDisplayName("Kod Wartości VAT")]
-        public string Kod
-        {
-            get => _Kod;
-            set => SetPropertyValue(nameof(Kod), ref _Kod, value);
-        }
+        public virtual string Kod { get; set; }
 
-        private decimal _Wartosc;
-        [Persistent("WARTOSC")]
+        [Column("WARTOSC")]
         [XafDisplayName("Wartość VAT")]
-        public decimal Wartosc
-        {
-            get => _Wartosc;
-            set => SetPropertyValue(nameof(Wartosc), ref _Wartosc, value);
-        }
+        public virtual decimal? Wartosc { get; set; } // decimal -> decimal? dla bezpieczeństwa
 
-        private string _Stawka;
-        [Persistent("VAT_STAWKA"), Size(10)]
+        [Column("VAT_STAWKA")]
+        [StringLength(10)] // Zamiast [Size(10)]
         [XafDisplayName("Stawka VAT")]
-        public string Stawka
-        {
-            get => _Stawka;
-            set => SetPropertyValue(nameof(Stawka), ref _Stawka, value);
-        }
+        public virtual string Stawka { get; set; }
 
-        [Association("VatWartosci-VatPowiazania")]
-        public XPCollection<VatPowiazania> Powiazania => GetCollection<VatPowiazania>(nameof(Powiazania));
-
-        public override void AfterConstruction()
-        {
-            base.AfterConstruction();
-            if (VatWartosciId == 0)
-            {
-                var maxIdObj = Session.ExecuteScalar("SELECT COALESCE(MAX(VAT_WARTOSCI_ID),0) FROM VAT_WARTOSCI");
-                VatWartosciId = System.Convert.ToInt32(maxIdObj) + 1;
-            }
-        }
+        // --- Konwersja relacji jeden-do-wielu ---
+        public virtual ICollection<VatPowiazania> Powiazania { get; set; } = new List<VatPowiazania>();
     }
 }

@@ -1,34 +1,39 @@
 ﻿using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Blazor;
+using DevExpress.ExpressApp.Updating;
+using DevExpress.ExpressApp.Security;
+using DevExpress.ExpressApp.Security.ClientServer;
 using DevExpress.ExpressApp.SystemModule;
-using DevExpress.ExpressApp.Xpo;
-using DXApplication.Blazor.Server.Services;
+using DXApplication.Module.BusinessObjects;
+using Microsoft.EntityFrameworkCore;
+using DevExpress.ExpressApp.EFCore;
+using DevExpress.EntityFrameworkCore.Security;
 
 namespace DXApplication.Blazor.Server;
 
 public class DXApplicationBlazorApplication : BlazorApplication {
     public DXApplicationBlazorApplication() {
-        ApplicationName = "DXApplication";
+        ApplicationName = "EFXAF";
         CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
-        DatabaseVersionMismatch += DXApplicationBlazorApplication_DatabaseVersionMismatch;
+        DatabaseVersionMismatch += EFXAFBlazorApplication_DatabaseVersionMismatch;
     }
     protected override void OnSetupStarted() {
         base.OnSetupStarted();
+
 #if DEBUG
         if(System.Diagnostics.Debugger.IsAttached && CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
             DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
         }
 #endif
     }
-    private void DXApplicationBlazorApplication_DatabaseVersionMismatch(object sender, DatabaseVersionMismatchEventArgs e) {
+    void EFXAFBlazorApplication_DatabaseVersionMismatch(object sender, DatabaseVersionMismatchEventArgs e) {
 #if EASYTEST
         e.Updater.Update();
         e.Handled = true;
 #else
         if(System.Diagnostics.Debugger.IsAttached) {
-            //e.Updater.Update();
-            e.Updater.Dispose();
+            e.Updater.Update();
             e.Handled = true;
         }
         else {

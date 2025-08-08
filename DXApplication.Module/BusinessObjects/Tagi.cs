@@ -1,32 +1,36 @@
-﻿using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
+using DevExpress.ExpressApp.DC;
+using DevExpress.Persistent.Base;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("TAGI")]
-    [DefaultProperty("TAGI_KOD")]
-    public class Tagi : XPLiteObject
+    [Table("TAGI")]
+    [XafDefaultProperty(nameof(TAGI_KOD))]
+    public class Tagi
     {
-        public Tagi(Session session) : base(session) { }
+        // Konstruktor XPO został usunięty
 
-        [Key(true)]
-        [Persistent("TAGI_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Odpowiednik XPO [Key(true)]
+        [Column("TAGI_ID")]
         [Browsable(false)]
-        public int TAGI_ID { get; set; }
+        public virtual int TAGI_ID { get; set; }
 
-        [Persistent("TAGI_KOD")]
-        [DevExpress.Xpo.DisplayName("Tagi kod")] 
+        [Column("TAGI_KOD")]
+        [XafDisplayName("Tagi kod")] // Zmieniono stary atrybut DisplayName na nowszy
+        public virtual string TAGI_KOD { get; set; }
 
-        public string TAGI_KOD { get; set; }
+        [Column("TAGI_OPIS")]
+        [XafDisplayName("Tagi opis")]
+        public virtual string TAGI_OPIS { get; set; }
 
-        [Persistent("TAGI_OPIS")]
-        [DevExpress.Xpo.DisplayName("Tagi opis")]
-        public string TAGI_OPIS { get; set; }
-
-        [Persistent("KOLEJNOSC")]
-        [DevExpress.Xpo.DisplayName("Kolejność")]
-        public string KOLEJNOSC { get; set; }
+        // UWAGA: Typ 'string' dla kolejności jest nietypowy. Jeśli w bazie są tam tylko liczby,
+        // rozważ zmianę typu na 'int?'. Na podstawie definicji XPO, 'string' jest poprawną konwersją.
+        [Column("KOLEJNOSC")]
+        [XafDisplayName("Kolejność")]
+        public virtual string KOLEJNOSC { get; set; }
     }
 }

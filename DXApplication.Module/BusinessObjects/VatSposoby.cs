@@ -1,75 +1,46 @@
-﻿using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("VAT_SPOSOBY")]
+    [Table("VAT_SPOSOBY")]
     [XafDefaultProperty(nameof(Opis))]
-    [OptimisticLocking(false)]
-    public class VatSposoby : XPLiteObject
+    public class VatSposoby
     {
-        public VatSposoby(Session session) : base(session) { }
+        // Konstruktor i metoda AfterConstruction zostały usunięte
 
-        private int _VatSposobyId;
-        [Key(false)] 
-        [Persistent("VAT_SPOSOBY_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] // Odpowiednik XPO [Key(false)]
+        [Column("VAT_SPOSOBY_ID")]
         [Browsable(false)]
-        public int VatSposobyId
-        {
-            get => _VatSposobyId;
-            set => SetPropertyValue(nameof(VatSposobyId), ref _VatSposobyId, value);
-        }
+        public virtual int VatSposobyId { get; set; }
 
-        private string _Kod;
-        [Persistent("VAT_SPOSOBY_KOD"), Size(20)]
+        [Column("VAT_SPOSOBY_KOD")]
+        [StringLength(20)] // Zamiast [Size(20)]
         [XafDisplayName("Kod Sposobu VAT")]
-        public string Kod
-        {
-            get => _Kod;
-            set => SetPropertyValue(nameof(Kod), ref _Kod, value);
-        }
+        public virtual string Kod { get; set; }
 
-        private string _Opis;
-        [Persistent("VAT_SPOSOBY_OPIS"), Size(255)]
+        [Column("VAT_SPOSOBY_OPIS")]
+        [StringLength(255)] // Zamiast [Size(255)]
         [XafDisplayName("Opis Sposobu VAT")]
-        public string Opis
-        {
-            get => _Opis;
-            set => SetPropertyValue(nameof(Opis), ref _Opis, value);
-        }
+        public virtual string Opis { get; set; }
 
-        private string _Brutto;
-        [Persistent("KONTO_BRUTTO"), Size(255)]
+        [Column("KONTO_BRUTTO")]
+        [StringLength(255)]
         [XafDisplayName("Konto Brutto")]
-        public string Brutto
-        {
-            get => _Brutto;
-            set => SetPropertyValue(nameof(Brutto), ref _Brutto, value);
-        }
+        public virtual string Brutto { get; set; }
 
-        private string _Konto;
-        [Persistent("KONTO_VAT"), Size(255)]
+        [Column("KONTO_VAT")]
+        [StringLength(255)]
         [XafDisplayName("Konto VAT")]
-        public string Konto
-        {
-            get => _Konto;
-            set => SetPropertyValue(nameof(Konto), ref _Konto, value);
-        }
+        public virtual string Konto { get; set; }
 
-        [Association("VatSposoby-VatPowiazania")]
-        public XPCollection<VatPowiazania> Powiazania => GetCollection<VatPowiazania>(nameof(Powiazania));
-
-        public override void AfterConstruction()
-        {
-            base.AfterConstruction();
-            if (VatSposobyId == 0)
-            {
-                var maxIdObj = Session.ExecuteScalar("SELECT COALESCE(MAX(VAT_SPOSOBY_ID),0) FROM VAT_SPOSOBY");
-                VatSposobyId = System.Convert.ToInt32(maxIdObj) + 1;
-            }
-        }
+        // --- Konwersja relacji jeden-do-wielu ---
+        public virtual ICollection<VatPowiazania> Powiazania { get; set; } = new List<VatPowiazania>();
     }
 }

@@ -1,32 +1,32 @@
-﻿using DevExpress.Persistent.Base;
-using DevExpress.Xpo;
-using System.ComponentModel;
+using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.DC;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Persistent("MANDANT")]
-    public class Mandant : XPLiteObject
+    [Table("MANDANT")] // Zamiast [Persistent]
+    [Browsable(true)]
+    public class Mandant
     {
-        public Mandant(Session session) : base(session) { }
+        // Konstruktor XPO został usunięty
 
-        [Key(true)]
-        [Persistent("MANDANT_ID")]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("MANDANT_ID")]
         [Browsable(false)]
-        public int MANDANT_ID { get; set; }
+        public virtual int MANDANT_ID { get; set; }
 
-        [Persistent("MANDANT_KOD")]
-        public string MANDANT_KOD { get; set; }
+        [Column("MANDANT_KOD")]
+        public virtual string MANDANT_KOD { get; set; }
 
-        [Persistent("MANDANT_OPIS")]
-        public string MANDANT_OPIS { get; set; }
+        [Column("MANDANT_OPIS")]
+        public virtual string MANDANT_OPIS { get; set; }
 
-        [Association("Mandant-Zaklady")]
         [XafDisplayName("Zakłady")]
-        public XPCollection<Zaklad> Zaklady
-        {
-            get { return GetCollection<Zaklad>(nameof(Zaklady)); }
-        }
+        // Właściwość kolekcji jest teraz standardową kolekcją C#
+        public virtual ICollection<Zaklady> Zaklady { get; set; } = new List<Zaklady>();
     }
 }
