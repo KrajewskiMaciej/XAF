@@ -22,6 +22,7 @@ namespace DXApplication.Module.BusinessObjects
         // --- Relacja do Waluta (wymagana) ---
 
         [Column("WALUTA_ID")] // Definicja klucza obcego
+        [Browsable(false)]
         public virtual int WalutaId { get; set; } // int, a nie int?, bo relacja jest wymagana (INNER JOIN)
 
         [ForeignKey(nameof(WalutaId))] // Połączenie nawigacji z kluczem obcym

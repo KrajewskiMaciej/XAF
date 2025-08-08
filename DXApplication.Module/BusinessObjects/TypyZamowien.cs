@@ -17,11 +17,14 @@ namespace DXApplication.Module.BusinessObjects
         [Browsable(false)]
         public virtual int ZamowieniaTypId { get; set; }
 
+        [Column("ZAMOWIENIA_TYP_KOD")]
+        public virtual string TypyZamowieniaKod { get; set; }
+
         [Column("ZAMOWIENIA_TYP_OPIS")]
-        public virtual string Opis { get; set; }
+        public virtual string TypyZamowieniaOpis { get; set; }
 
         [Column("ZAMOWIENIE_RODZAJ")]
-        public virtual string Rodzaj { get; set; }
+        public virtual string RodzajZam { get; set; }
 
         // --- Pola wartościowe zamienione na nullowalne dla bezpieczeństwa ---
 
@@ -35,56 +38,34 @@ namespace DXApplication.Module.BusinessObjects
         public virtual bool? KontrolujKluczKlienta { get; set; }
 
         [Column("NR_ZAM2KLUCZ")]
-        public virtual bool? NrZam2Klucz { get; set; }
+        public virtual bool? NrZamDoKlucza { get; set; }
 
         [Column("KONTROLUJ_KOMISJE")]
         public virtual bool? KontrolujKomisje { get; set; }
 
-        [Column("NUMER_START")]
-        public virtual int? NumerStart { get; set; }
-
-        [Column("INSERTED_BY")]
-        public virtual string InsertedBy { get; set; }
-
-        [Column("INS_DATE")]
-        public virtual DateTime? InsertedDate { get; set; } // Już było nullable, co jest poprawne
-
-        [Column("EDITING")]
-        public virtual string Editing { get; set; }
-
-        [Column("EDI_DATE")]
-        public virtual DateTime? EdiDate { get; set; } // Już było nullable, co jest poprawne
-
-        [Column("SCHEMAT_PRZYKLAD")]
-        public virtual string SchematPrzyklad { get; set; }
-
         [Column("AUTONUMER")]
-        public virtual bool? Autonumer { get; set; }
+        public virtual bool? Autonumerowanie { get; set; }
 
-        [Column("ZAMOWIENIA_TYP_KOD")]
-        public virtual string ZamowieniaTypKod { get; set; }
+        [Column("AUTO_NUM_SCHEMAT_ID")]
+        [Browsable(false)]
+        public virtual int? AutoNumSchematId { get; set; } // Klucz obcy (musi być nullable, bo jest LEFT JOIN)
 
-        [Column("EDI_KOD")]
-        public virtual string EdiKod { get; set; }
+        [ForeignKey(nameof(AutoNumSchematId))]
+        public virtual SchematAutonumeracji ShcematAutonum { get; set; } // Właściwość nawigacyjna
 
         [Column("BOOKING_RULES")]
-        public virtual string BookingRules { get; set; }
+        public virtual int? RegulyRezerwacji { get; set; }
+
+        [Column("BOOKING_ANONYMOUS_LEVEL")]
+        public virtual int? AnonimizacjaRezerwacji { get; set; }
+
 
         [Column("WYKLUCZ_Z_MAT_DET_SERIA")]
         public virtual bool? WykluczZMatDetSeria { get; set; }
 
-        [Column("BOOKING_ANONYMOUS_LEVEL")]
-        public virtual int? BookingAnonymousLevel { get; set; }
-
+        
         [Column("KONTROLA_WYSYLKI")]
         public virtual bool? KontrolaWysylki { get; set; }
 
-        // --- Relacja do AutoNumSchemat (opcjonalna) ---
-
-        [Column("AUTO_NUM_SCHEMAT_ID")]
-        public virtual int? AutoNumSchematId { get; set; } // Klucz obcy (musi być nullable, bo jest LEFT JOIN)
-
-        [ForeignKey(nameof(AutoNumSchematId))]
-        public virtual AutoNumSchemat AutoNumSchemat { get; set; } // Właściwość nawigacyjna
     }
 }

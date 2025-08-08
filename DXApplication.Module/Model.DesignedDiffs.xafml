@@ -2,10 +2,10 @@
 <Application Title="ITM Softwarehouse" Company="ITM Softwarehouse">
   <NavigationItems>
     <Items>
-      <Item Id="AutoNumSchemat_ListView" ViewId="AutoNumSchemat_ListView" ObjectKey="" ImageName="ListNumbers" IsNewNode="True" />
+      <Item Id="SchematAutonumeracji_ListView" ViewId="SchematAutonumeracji_ListView" ObjectKey="" ImageName="ListNumbers" IsNewNode="True" />
       <Item Id="Default" Caption="VAT" ImageName="LayoutCustomization_Group">
         <Items>
-          <Item Id="AutoNumSchemat_ListView" Removed="True" />
+          <Item Id="SchematAutonumeracji_ListView" Removed="True" />
           <Item Id="Jednostki_ListView" Removed="True" />
           <Item Id="Jezyki_ListView" Removed="True" />
           <Item Id="Klient_ListView" Removed="True" />

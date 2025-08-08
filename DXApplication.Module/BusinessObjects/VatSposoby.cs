@@ -9,7 +9,6 @@ namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [Table("VAT_SPOSOBY")]
-    [XafDefaultProperty(nameof(Opis))]
     public class VatSposoby
     {
         // Konstruktor i metoda AfterConstruction zostały usunięte
@@ -22,12 +21,12 @@ namespace DXApplication.Module.BusinessObjects
 
         [Column("VAT_SPOSOBY_KOD")]
         [StringLength(20)] // Zamiast [Size(20)]
-        [XafDisplayName("Kod Sposobu VAT")]
+        [XafDisplayName("VAT sposob kod")]
         public virtual string Kod { get; set; }
 
         [Column("VAT_SPOSOBY_OPIS")]
         [StringLength(255)] // Zamiast [Size(255)]
-        [XafDisplayName("Opis Sposobu VAT")]
+        [XafDisplayName("VAT sposob opis")]
         public virtual string Opis { get; set; }
 
         [Column("KONTO_BRUTTO")]

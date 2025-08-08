@@ -8,7 +8,6 @@ namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [Table("SYS_DOK_ZAS")] // Zamiast [Persistent] na klasie
-    [XafDefaultProperty(nameof(WydrukiOpis))] // Poprawiony atrybut z oryginalnego kodu
     public class Wydruki
     {
         // Konstruktor XPO został usunięty
@@ -21,6 +20,7 @@ namespace DXApplication.Module.BusinessObjects
 
         // --- Relacja do Kategoria ---
         [Column("RAPORT_KATEGORIA")]
+        [Browsable(false)]
         public virtual int? KategoriaId { get; set; } // Jawna właściwość klucza obcego (nullable dla bezpieczeństwa)
 
         [ForeignKey(nameof(KategoriaId))]
@@ -28,10 +28,10 @@ namespace DXApplication.Module.BusinessObjects
 
         // --- Pozostałe właściwości ---
         [Column("SYS_DOK_ZAS_KOD")]
-        public virtual string WydrukiKod { get; set; }
+        public virtual string WydrukKod { get; set; }
 
         [Column("SYS_DOK_KOD_OPIS")]
-        public virtual string WydrukiOpis { get; set; }
+        public virtual string WydrukOpis { get; set; }
 
         [Column("RAPORT")]
         public virtual string Raport { get; set; }

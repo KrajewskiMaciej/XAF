@@ -9,7 +9,6 @@ namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [Table("VAT_OPISY")]
-    [XafDefaultProperty(nameof(Opis))]
     public class VatOpisy
     {
         // Konstruktor XPO został usunięty
@@ -22,26 +21,14 @@ namespace DXApplication.Module.BusinessObjects
 
         [Column("VAT_OPISY_KOD")]
         [StringLength(20)] // Zamiast [Size(20)]
-        [XafDisplayName("Kod Opisu VAT")]
+        [XafDisplayName("VAT kod")]
         public virtual string Kod { get; set; }
 
         [Column("VAT_OPISY_OPIS")]
         [StringLength(255)] // Zamiast [Size(255)]
-        [XafDisplayName("Opis VAT")]
+        [XafDisplayName("VAT opis")]
         public virtual string Opis { get; set; }
 
-        // --- Konwersja relacji jeden-do-wielu ---
         public virtual ICollection<VatPowiazania> Powiazania { get; set; } = new List<VatPowiazania>();
     }
-
-    // UWAGA: Aby powyższy kod działał poprawnie, musisz również przekonwertować klasę VatPowiazania.
-    // Powinna ona zawierać klucz obcy (np. VatOpisyId) i właściwość nawigacyjną wskazującą z powrotem na klasę VatOpisy.
-    //
-    // public class VatPowiazania
-    // {
-    //     // ... inne właściwości
-    //
-    //     public int VatOpisyId { get; set; } // Klucz obcy
-    //     public virtual VatOpisy VatOpisy { get; set; } // Właściwość nawigacyjna
-    // }
 }

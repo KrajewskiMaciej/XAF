@@ -10,7 +10,6 @@ namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [Table("VAT_POWIAZANIA")]
-    [XafDefaultProperty(nameof(DisplayMember))]
     public class VatPowiazania
     {
         // Konstruktor XPO został usunięty.
@@ -21,12 +20,15 @@ namespace DXApplication.Module.BusinessObjects
         // konfiguruje się w DbContext za pomocą Fluent API.
 
         [Column("VAT_OPISY_ID")]
+        [Browsable(false)]
         public virtual int VatOpisyId { get; set; }
 
         [Column("VAT_SPOSOBY_ID")]
+        [Browsable(false)]
         public virtual int VatSposobyId { get; set; }
 
         [Column("KRAJE_ID")]
+        [Browsable(false)]
         public virtual int KrajeId { get; set; }
 
 
@@ -34,45 +36,27 @@ namespace DXApplication.Module.BusinessObjects
         // Łączymy właściwości nawigacyjne z odpowiednimi kolumnami klucza obcego.
 
         [ForeignKey(nameof(VatOpisyId))]
+        [Browsable(false)]
         public virtual VatOpisy VatOpisy { get; set; }
 
         [ForeignKey(nameof(VatSposobyId))]
+        [Browsable(false)]
         public virtual VatSposoby VatSposoby { get; set; }
 
         [ForeignKey(nameof(KrajeId))]
+        [Browsable(false)]
         public virtual Kraje Kraje { get; set; }
 
 
         // --- CZĘŚĆ 3: POZOSTAŁE RELACJE I POLA ---
         // Relacja do VatWartosci (opcjonalna, na podstawie LEFT JOIN w SQL)
         [Column("VAT_WARTOSCI_ID")]
+        [Browsable(false)]
         public virtual int? VatWartosciId { get; set; }
 
         [ForeignKey(nameof(VatWartosciId))]
+        [Browsable(false)]
         public virtual VatWartosci VatWartosci { get; set; }
-
-        // --- Pola audytowe ---
-        [Column("INSERTED_BY")]
-        [ModelDefault("AllowEdit", "False")]
-        [XafDisplayName("Wstawiony przez")]
-        public virtual string InsertedBy { get; set; }
-
-        [Column("INS_DATE")]
-        [ModelDefault("AllowEdit", "False")]
-        [XafDisplayName("Data wstawienia")]
-        public virtual DateTime? InsDate { get; set; }
-        
-        // ... pozostałe pola audytowe (Editing, EdiDate etc.) w ten sam sposób
-        [Column("EDITING")]
-        [ModelDefault("AllowEdit", "False")]
-        [XafDisplayName("Edytujący")]
-        public virtual string Editing { get; set; }
-
-        [Column("EDI_DATE")]
-        [ModelDefault("AllowEdit", "False")]
-        [XafDisplayName("Data edycji")]
-        public virtual DateTime? EdiDate { get; set; }
-
 
         // --- CZĘŚĆ 4: WŁAŚCIWOŚCI NIEMAPOWANE (NON-PERSISTENT) ---
         // Logika pozostaje identyczna, ale atrybut zmienia się na [NotMapped].

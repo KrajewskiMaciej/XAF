@@ -7,13 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [Table("LC_WYDZIALY")] // Zamiast [Persistent]
+    [Table("LC_WYDZIALY")]
     public class Wydzialy
     {
-        // Konstruktor XPO został usunięty
-
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Odpowiednik XPO [Key(true)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("LC_WYDZIALY_ID")]
         [Browsable(false)]
         public virtual int Id { get; set; }
@@ -26,40 +24,50 @@ namespace DXApplication.Module.BusinessObjects
         [XafDisplayName("Wydział opis")]
         public virtual string Opis { get; set; }
 
-        // --- Pola, które mogą być NULL - zamienione na typy nullowalne ---
+        // --- Relacja do Klienci (Firma) ---
 
-        [Column("PODSTAWOWY")]
+        [Column("KLIENCI_ID")]
+        [Browsable(false)] // Ukrycie klucza obcego w UI, ponieważ mamy właściwości poniżej.
+        public virtual int FirmaId { get; set; }
+
+        [ForeignKey(nameof(FirmaId))]
+        [Browsable(false)]
+        public virtual Klient Firma { get; set; }
+
+        // DODANO: Jawne właściwości dla kolumn z powiązanej firmy, widocznych w siatce.
+        [NotMapped] // Atrybut zapobiega tworzeniu tej kolumny w bazie danych.
+        [XafDisplayName("Firma kod")]
+        public virtual string FirmaKod => Firma?.Kod;
+
+        [NotMapped]
+        [XafDisplayName("Firma opis")]
+        public virtual string FirmaOpis => Firma?.Opis;
+
+                [Column("PODSTAWOWY")]
         [XafDisplayName("Podstawowy")]
-        public virtual int? Podstawowy { get; set; } // int -> int? dla bezpieczeństwa
+        public virtual short? Podstawowy { get; set; }
 
         [Column("BRAMKA")]
         [XafDisplayName("Bramka")]
-        public virtual int? Bramka { get; set; } // int -> int? dla bezpieczeństwa
+        public virtual short? Bramka { get; set; }
 
-        // --- Relacje zidentyfikowane w skrypcie SQL ---
 
-        // 1. Relacja do Klienci (wymagana)
-        [Column("KLIENCI_ID")]
-        public virtual int FirmaId { get; set; } // Klucz obcy
+        // --- Opcjonalne relacje (pozostawione bez zmian) ---
 
-        [ForeignKey(nameof(FirmaId))]
-        [XafDisplayName("Firma")]
-        public virtual Klient Firma { get; set; } // Właściwość nawigacyjna
-
-        // 2. Relacja do Jednostki (opcjonalna)
         [Column("JEDNOSTKI_ID")]
-        public virtual int? JednostkiId { get; set; } // Klucz obcy (nullable)
+        [Browsable(false)]
+        public virtual int? JednostkiId { get; set; }
 
         [ForeignKey(nameof(JednostkiId))]
-        public virtual Jednostki Jednostki { get; set; } // Właściwość nawigacyjna
+        [Browsable(false)]
+        public virtual Jednostki Jednostki { get; set; }
 
-        // 4. Relacja do SysDokZas (opcjonalna)
         [Column("SYS_DOK_ZAS_ID")]
-        public virtual int? SysDokZasId { get; set; } // Klucz obcy (nullable)
+        [Browsable(false)]
+        public virtual int? SysDokZasId { get; set; }
 
         [ForeignKey(nameof(SysDokZasId))]
-        public virtual Wydruki SysDokZas { get; set; } // Właściwość nawigacyjna
+        [Browsable(false)]
+        public virtual Wydruki SysDokZas { get; set; }
     }
-
-
 }

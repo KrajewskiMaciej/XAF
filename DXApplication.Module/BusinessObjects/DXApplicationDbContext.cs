@@ -20,7 +20,7 @@ public class DXApplicationEFCoreDbContext : DbContext
     //public DbSet<ModuleInfo> ModulesInfo { get; set; }
     public DbSet<Mandant> Mandanci { get; set; }
     public DbSet<Zaklady> Zaklady { get; set; }
-    public DbSet<AutoNumSchemat> AutoNumSchemats { get; set; }
+    public DbSet<SchematAutonumeracji> AutoNumSchemats { get; set; }
     public DbSet<TypyZamowienia> TypyZamowienia { get; set; }
     public DbSet<Wydzialy> Wydzialy { get; set; }
     public DbSet<Jednostki> Jednostki { get; set; }
@@ -34,7 +34,8 @@ public class DXApplicationEFCoreDbContext : DbContext
     public DbSet<VatWartosci> VatWartosci { get; set; }
     public DbSet<VatSposoby> VatSposoby { get; set; }
     public DbSet<Kraje> Kraje { get; set; }
-
+    public DbSet<Jezyki> Jezyki { get; set; }
+    public DbSet<Tagi> Tagi { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -59,8 +60,8 @@ public class DXApplicationEFCoreDbContext : DbContext
     {
         // Znajdź wszystkie nowe obiekty typu AutoNumSchemat, które są dodawane do bazy
         var newEntities = ChangeTracker.Entries()
-            .Where(e => e.State == EntityState.Added && e.Entity is AutoNumSchemat)
-            .Select(e => e.Entity as AutoNumSchemat);
+            .Where(e => e.State == EntityState.Added && e.Entity is SchematAutonumeracji)
+            .Select(e => e.Entity as SchematAutonumeracji);
 
         foreach (var entity in newEntities)
         {

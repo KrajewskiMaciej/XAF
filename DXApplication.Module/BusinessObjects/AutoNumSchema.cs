@@ -5,12 +5,13 @@ using DevExpress.Persistent.Base;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DevExpress.XtraRichEdit.Fields;
 
 namespace DXApplication.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [Table("AUTO_NUM_SCHEMAT")] // Zamiast [Persistent]
-    public class AutoNumSchemat
+    public class SchematAutonumeracji
     {
         // Konstruktor i właściwość Session zostały usunięte.
 
@@ -108,10 +109,10 @@ namespace DXApplication.Module.BusinessObjects
 
         [Column("SEPARATOR_OPIS")]
         [StringLength(20)]
-        [XafDisplayName("Separator opis")]
+        [XafDisplayName("Separator opisu")]
         [ModelDefault("Index", "5")]
         public virtual string SEPARATOR_OPIS { get; set; }
-        
+
         // Metoda OnSaving została usunięta - jej logikę przenosimy do DbContext
 
         // Konwersja kolekcji

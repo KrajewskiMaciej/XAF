@@ -22,16 +22,16 @@ namespace DXApplication.Module.BusinessObjects
 
         [Column("VAT_WARTOSCI_KOD")]
         [StringLength(20)] // Zamiast [Size(20)]
-        [XafDisplayName("Kod Wartości VAT")]
+        [XafDisplayName("VAT wartość kod ")]
         public virtual string Kod { get; set; }
 
         [Column("WARTOSC")]
-        [XafDisplayName("Wartość VAT")]
+        [XafDisplayName("VAT wartość ")]
         public virtual decimal? Wartosc { get; set; } // decimal -> decimal? dla bezpieczeństwa
 
         [Column("VAT_STAWKA")]
         [StringLength(10)] // Zamiast [Size(10)]
-        [XafDisplayName("Stawka VAT")]
+        [XafDisplayName("Stawka JPK")]
         public virtual string Stawka { get; set; }
 
         // --- Konwersja relacji jeden-do-wielu ---

@@ -10,11 +10,10 @@ namespace DXApplication.Module.BusinessObjects
     [Table("ZAKLADY")] // Zamiast [Persistent] na klasie
     public class Zaklady
     {
-        // Konstruktor XPO został usunięty. EF Core nie wymaga specjalnego konstruktora.
 
-        [Key] // Standardowy atrybut EF Core dla klucza głównego
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Odpowiednik XPO Key(true) - klucz generowany przez bazę
-        [Column("ZAKLADY_ID")] // Zamiast [Persistent] na właściwości
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("ZAKLADY_ID")]
         [Browsable(false)]
         public virtual int Id { get; set; }
 
@@ -26,10 +25,8 @@ namespace DXApplication.Module.BusinessObjects
         [XafDisplayName("Zakład kod")]
         public virtual string Kod { get; set; }
 
-        // --- Konfiguracja relacji w EF Core ---
-
-        [Column("MDT")] // Definiuje nazwę kolumny dla klucza obcego w bazie danych
-        public virtual int MandantId { get; set; } // Dodana właściwość przechowująca sam klucz obcy
+        [Column("MDT")]
+        public virtual int MandantId { get; set; }
 
         [ForeignKey(nameof(MandantId))] // Łączy nawigację 'Mandant' z kluczem obcym 'MandantId'
         [XafDisplayName("Mandant")]

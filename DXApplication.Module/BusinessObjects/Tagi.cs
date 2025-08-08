@@ -20,11 +20,11 @@ namespace DXApplication.Module.BusinessObjects
         public virtual int TAGI_ID { get; set; }
 
         [Column("TAGI_KOD")]
-        [XafDisplayName("Tagi kod")] // Zmieniono stary atrybut DisplayName na nowszy
+        [XafDisplayName("Tag kod")] // Zmieniono stary atrybut DisplayName na nowszy
         public virtual string TAGI_KOD { get; set; }
 
         [Column("TAGI_OPIS")]
-        [XafDisplayName("Tagi opis")]
+        [XafDisplayName("Tag opis")]
         public virtual string TAGI_OPIS { get; set; }
 
         // UWAGA: Typ 'string' dla kolejności jest nietypowy. Jeśli w bazie są tam tylko liczby,
