@@ -12,8 +12,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
-using System.Text.Encodings.Web;
+using System.Text.Encodings;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace DXApplication.Blazor.Server;
 
@@ -56,6 +57,8 @@ public class Startup
                 })
                 .WithDbContext<DXApplication.Module.BusinessObjects.DXApplicationEFCoreDbContext>((serviceProvider, options) =>
                               {
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
                     string connectionString = null;
                     if (Configuration.GetConnectionString("ConnectionString") != null)
                     {
